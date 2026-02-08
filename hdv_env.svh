@@ -32,7 +32,6 @@ class hdv_env #(type CFG_T               = hdv_env_cfg,
 
     scoreboard = SCOREBOARD_T::type_id::create("scoreboard", this);
     scoreboard.cfg = cfg;
-    scoreboard.cov = cov;
   endfunction
 
 endclass

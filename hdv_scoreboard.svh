@@ -37,7 +37,6 @@ class hdv_scoreboard #(type ITEM_T     = uvm_sequence_item,
     fork
       collect_expected();
       collect_actual();
-      monitor_reset();
     join_none
   endtask
 
@@ -46,10 +45,6 @@ class hdv_scoreboard #(type ITEM_T     = uvm_sequence_item,
 
     forever begin
       req_fifo.get(item);
-
-      if (cfg.in_reset) begin
-        continue;
-      end
 
       $cast(clone, item.clone());
       exp_q.push_back(clone);
@@ -66,11 +61,6 @@ class hdv_scoreboard #(type ITEM_T     = uvm_sequence_item,
 
     forever begin
       rsp_fifo.get(act);
-
-      if (cfg.in_reset) begin
-        exp_q.delete();
-        continue;
-      end
 
       if (exp_q.size() == 0) begin
         `uvm_error("SCB",
@@ -89,20 +79,6 @@ class hdv_scoreboard #(type ITEM_T     = uvm_sequence_item,
       else begin
         `uvm_info("SCB_MATCH", "Transaction matched", UVM_MEDIUM)
       end
-    end
-  endtask
-
-  task monitor_reset();
-    bit prev_reset;
-
-    prev_reset = cfg.in_reset;
-    forever begin
-      @(cfg.in_reset);
-      if (!prev_reset && cfg.in_reset) begin
-        `uvm_info("SCB", "Reset detected, clearing scoreboard", UVM_HIGH)
-        exp_q.delete();
-      end
-      prev_reset = cfg.in_reset;
     end
   endtask
 
