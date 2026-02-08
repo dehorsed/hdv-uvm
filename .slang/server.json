@@ -1,0 +1,3 @@
+{
+  "indexGlobs": ["$UVM_HOME/uvm_pkg.sv", "./*.sv"]
+}
