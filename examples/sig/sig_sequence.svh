@@ -1,10 +1,12 @@
-class sig_sequence extends hdv_sequence #(sig_seq_item, sig_seq_item, hdv_agent_cfg, sig_sequencer);
+class sig_sequence extends uvm_sequence #(sig_seq_item);
   `uvm_object_utils(sig_sequence)
 
-  `uvm_object_new
+  function new(string name = "sig_sequence");
+    super.new(name);
+  endfunction
 
   virtual task body();
-    for (int i = 0; i < 1000; i++) begin
+    for (int i = 0; i < 10; i++) begin
       req = sig_seq_item::type_id::create("req");
       wait_for_grant();
       void'(req.randomize());

@@ -17,7 +17,6 @@ class hdv_env #(type CFG_T               = hdv_env_cfg,
   `uvm_component_new
 
   virtual function void build_phase(uvm_phase phase);
-    string default_ral_name;
     super.build_phase(phase);
     // get hdv_env_cfg object from uvm_config_db
     if (!uvm_config_db#(CFG_T)::get(this, "", "cfg", cfg)) begin

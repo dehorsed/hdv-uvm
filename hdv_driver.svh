@@ -12,7 +12,7 @@ class hdv_driver #(type ITEM_T     = uvm_sequence_item,
 
   `uvm_component_param_utils(hdv_driver #(ITEM_T, CFG_T, RSP_ITEM_T))
 
-  bit   under_reset;
+  bit   under_reset = 0;
   CFG_T cfg;
 
   `uvm_component_new
@@ -22,20 +22,12 @@ class hdv_driver #(type ITEM_T     = uvm_sequence_item,
 
     super.run_phase(phase);
     fork
-      forever begin
-        @(negedge cfg.vif.rst_n);
-        under_reset = 1;
-
-        reset_signals();
-
-        @(posedge cfg.vif.rst_n);
-        under_reset = 0;
-      end
+      reset_signals();
       forever begin
         seq_item_port.get_next_item(req);
 
         // Wait until reset end
-        wait(!under_reset);
+        //wait(!under_reset);
 
         drive_trans(req);
 
@@ -44,7 +36,7 @@ class hdv_driver #(type ITEM_T     = uvm_sequence_item,
     join_none
   endtask
 
-  // reset signals
+  // reset signals forever
   virtual task reset_signals();
     // Empty - to be populated in child class
   endtask

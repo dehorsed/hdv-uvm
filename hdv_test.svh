@@ -14,14 +14,10 @@ class hdv_test #(type CFG_T = hdv_env_cfg,
   `uvm_component_new
   
   virtual function void build_phase(uvm_phase phase);
-`ifdef VERILATOR
-    uvm_object obj;
-`endif
-
     super.build_phase(phase);
     env = ENV_T::type_id::create("env", this);
 `ifdef VERILATOR
-    obj = SEQUENCE_T::type_id::create("seq");
+     uvm_object obj = SEQUENCE_T::type_id::create("seq");
     if (!$cast(seq, obj)) begin
       `uvm_fatal("SEQ", "Factory returned wrong sequence type");
     end
@@ -29,6 +25,11 @@ class hdv_test #(type CFG_T = hdv_env_cfg,
     seq = SEQUENCE_T::type_id::create("seq");
 `endif
   endfunction
+
+  virtual function void end_of_elaboration_phase(uvm_phase phase);
+    super.end_of_elaboration_phase(phase);
+    uvm_pkg::uvm_top.print_topology();
+  endfunction:end_of_elaboration_phase
 
   task run_phase(uvm_phase phase);
     phase.raise_objection(this);

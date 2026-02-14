@@ -1,6 +1,6 @@
 interface sig_if (
     input logic clk,
-    rst_n
+    reset
 );
   logic sig;
 
@@ -14,7 +14,7 @@ interface sig_if (
     input sig;
   endclocking
 
-  modport DRIVER(clocking driver_cb, input clk, rst_n);
-  modport MONITOR(clocking monitor_cb, input clk, rst_n);
+  modport DRIVER(clocking driver_cb, input clk, reset);
+  modport MONITOR(clocking monitor_cb, input clk, reset);
 
 endinterface

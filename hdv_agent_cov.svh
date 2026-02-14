@@ -13,4 +13,7 @@ class hdv_agent_cov #(type ITEM_T = uvm_sequence_item,
 
   `uvm_component_new
 
+  virtual function void write(ITEM_T t);
+  endfunction
+
 endclass
