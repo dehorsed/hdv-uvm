@@ -1,6 +1,8 @@
 package sig_pkg;
   import uvm_pkg::*;
   import hdv_pkg::*;
+  `include "uvm_macros.svh"
+  `include "hdv_macros.svh"
   `include "sig_agent_cfg.svh"
   `include "sig_seq_item.svh"
   `include "sig_sequencer.svh"
