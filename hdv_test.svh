@@ -1,6 +1,9 @@
 // Copyright lowRISC contributors (OpenTitan project).
 // Licensed under the Apache License, Version 2.0, see LICENSE for details.
 // SPDX-License-Identifier: Apache-2.0
+//
+// Modified by Daniil Kanelsky.
+// Simplified for use in small projects without virtual sequences and RAL.
 
 class hdv_test #(
   type CFG_T = hdv_env_cfg,
