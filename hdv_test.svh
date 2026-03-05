@@ -34,7 +34,7 @@ class hdv_test #(
   virtual function void end_of_elaboration_phase(uvm_phase phase);
     super.end_of_elaboration_phase(phase);
 `ifndef VERILATOR
-    uvm_pkg::uvm_top.print_topology();
+    uvm_top.print_topology();
 `endif
   endfunction : end_of_elaboration_phase
 
