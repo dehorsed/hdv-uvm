@@ -5,14 +5,16 @@
 // Modified by Daniil Kanelsky.
 // Simplified for use in small projects without virtual sequences and RAL.
 
-class hdv_env #(type CFG_T               = hdv_env_cfg,
-                type SCOREBOARD_T        = hdv_scoreboard,
-                type COV_T               = hdv_env_cov) extends uvm_env;
-  `uvm_component_param_utils(hdv_env #(CFG_T, SCOREBOARD_T, COV_T))
+class hdv_env #(
+  type CFG_T        = hdv_env_cfg,
+  type SCOREBOARD_T = hdv_scoreboard,
+  type COV_T        = hdv_env_cov
+) extends uvm_env;
+  `uvm_component_param_utils(hdv_env#(CFG_T, SCOREBOARD_T, COV_T))
 
-  CFG_T                      cfg;
-  SCOREBOARD_T               scoreboard;
-  COV_T                      cov;
+  CFG_T        cfg;
+  SCOREBOARD_T scoreboard;
+  COV_T        cov;
 
   `uvm_component_new
 

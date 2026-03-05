@@ -5,14 +5,15 @@
 // Modified by Daniil Kanelsky.
 // Simplified for use in small projects without virtual sequences and RAL.
 
-class hdv_agent #(type CFG_T            = hdv_agent_cfg,
-                  type DRIVER_T         = hdv_driver,
-                  type SEQUENCER_T      = hdv_sequencer,
-                  type MONITOR_T        = hdv_monitor,
-                  type COV_T            = hdv_agent_cov) extends uvm_agent;
+class hdv_agent #(
+  type CFG_T       = hdv_agent_cfg,
+  type DRIVER_T    = hdv_driver,
+  type SEQUENCER_T = hdv_sequencer,
+  type MONITOR_T   = hdv_monitor,
+  type COV_T       = hdv_agent_cov
+) extends uvm_agent;
 
-  `uvm_component_param_utils(hdv_agent #(CFG_T, DRIVER_T,
-                                         SEQUENCER_T, MONITOR_T, COV_T))
+  `uvm_component_param_utils(hdv_agent#(CFG_T, DRIVER_T, SEQUENCER_T, MONITOR_T, COV_T))
 
   CFG_T       cfg;
   COV_T       cov;
@@ -32,7 +33,7 @@ class hdv_agent #(type CFG_T            = hdv_agent_cfg,
 
     // create components
     if (cfg.en_cov) begin
-      cov = COV_T ::type_id::create("cov", this);
+      cov = COV_T::type_id::create("cov", this);
       cov.cfg = cfg;
     end
 
@@ -47,7 +48,7 @@ class hdv_agent #(type CFG_T            = hdv_agent_cfg,
       driver = DRIVER_T::type_id::create("driver", this);
       driver.cfg = cfg;
     end
-  endfunction
+  endfunction : build_phase
 
   function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
@@ -60,6 +61,6 @@ class hdv_agent #(type CFG_T            = hdv_agent_cfg,
     if (cfg.has_rsp_fifo) begin
       monitor.rsp_analysis_port.connect(sequencer.rsp_analysis_fifo.analysis_export);
     end
-  endfunction
+  endfunction : connect_phase
 
 endclass

@@ -5,14 +5,18 @@
 // Modified by Daniil Kanelsky.
 // Simplified for use in small projects without virtual sequences and RAL.
 
-class hdv_sequencer #(type ITEM_T     = uvm_sequence_item,
-                      type CFG_T      = hdv_agent_cfg,
-                      type RSP_ITEM_T = ITEM_T)
-  extends uvm_sequencer #(.REQ(ITEM_T), .RSP(RSP_ITEM_T));
+class hdv_sequencer #(
+  type ITEM_T     = uvm_sequence_item,
+  type CFG_T      = hdv_agent_cfg,
+  type RSP_ITEM_T = ITEM_T
+) extends uvm_sequencer #(
+  .REQ(ITEM_T),
+  .RSP(RSP_ITEM_T)
+);
 
-  `uvm_component_param_utils(hdv_sequencer #(.ITEM_T     (ITEM_T),
-                                             .CFG_T      (CFG_T),
-                                             .RSP_ITEM_T (RSP_ITEM_T)))
+  `uvm_component_param_utils(hdv_sequencer#(.ITEM_T(ITEM_T),
+                                            .CFG_T(CFG_T),
+                                            .RSP_ITEM_T(RSP_ITEM_T)))
 
   // These FIFOs collect items when req/rsp is received, which are used to communicate between
   // monitor and sequences. These FIFOs are optional
@@ -21,7 +25,7 @@ class hdv_sequencer #(type ITEM_T     = uvm_sequence_item,
   uvm_tlm_analysis_fifo #(ITEM_T)     req_analysis_fifo;
   uvm_tlm_analysis_fifo #(RSP_ITEM_T) rsp_analysis_fifo;
 
-  CFG_T cfg;
+  CFG_T                               cfg;
 
   `uvm_component_new
 

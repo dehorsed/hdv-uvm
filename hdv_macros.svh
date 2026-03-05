@@ -6,40 +6,40 @@
 // Simplified for use in small projects without virtual sequences and RAL.
 
 `ifdef UVM
-  `include "uvm_macros.svh"
+`include "uvm_macros.svh"
 `endif
 
 // UVM speficic macros
 `ifndef gfn
 `ifdef UVM
-  // verilog_lint: waive macro-name-style
-  `define gfn get_full_name()
+// verilog_lint: waive macro-name-style
+`define gfn get_full_name()
 `else
-  // verilog_lint: waive macro-name-style
-  `define gfn $sformatf("%m")
+// verilog_lint: waive macro-name-style
+`define gfn $sformatf("%m")
 `endif
 `endif
 
 `ifndef gtn
-  // verilog_lint: waive macro-name-style
-  `define gtn get_type_name()
+// verilog_lint: waive macro-name-style
+`define gtn get_type_name()
 `endif
 
 `ifndef gn
-  // verilog_lint: waive macro-name-style
-  `define gn get_name()
+// verilog_lint: waive macro-name-style
+`define gn get_name()
 `endif
 
 `ifndef gmv
-  // verilog_lint: waive macro-name-style
-  `define gmv(csr) csr.get_mirrored_value()
+// verilog_lint: waive macro-name-style
+`define gmv(csr) csr.get_mirrored_value()
 `endif
 
 // cast base class obj holding extended class handle to extended class handle;
 // throw error if cast fails
 `ifndef downcast
-  // verilog_lint: waive macro-name-style
-  `define downcast(EXT_, BASE_, MSG_="", SEV_=fatal, ID_=`gfn) \
+// verilog_lint: waive macro-name-style
+`define downcast(EXT_, BASE_, MSG_ = "", SEV_ = fatal, ID_ = `gfn) \
     begin \
       if (!$cast(EXT_, BASE_)) begin \
         `dv_``SEV_($sformatf({"Cast failed: base class variable %0s ", \
@@ -51,42 +51,42 @@
 
 // Note, UVM provides a macro `uvm_new_func -- which only applies to uvm_components
 `ifndef uvm_object_new
-  `define uvm_object_new \
+`define uvm_object_new \
     function new (string name=""); \
       super.new(name); \
     endfunction : new
 `endif
 
 `ifndef uvm_create_obj
-  `define uvm_create_obj(_type_name_, _inst_name_) \
+`define uvm_create_obj(_type_name_, _inst_name_) \
     _inst_name_ = _type_name_::type_id::create(`"_inst_name_`");
 `endif
 
 `ifndef uvm_component_new
-  `define uvm_component_new \
+`define uvm_component_new \
     function new (string name, uvm_component parent); \
       super.new(name, parent); \
     endfunction : new
 `endif
 
 `ifndef uvm_create_comp
-  `define uvm_create_comp(_type_name_, _inst_name_) \
+`define uvm_create_comp(_type_name_, _inst_name_) \
     _inst_name_ = _type_name_::type_id::create(`"_inst_name_`", this);
 `endif
 
 // Convert arbitrary text / expression to string.
 `ifndef DV_STRINGIFY
-  `define DV_STRINGIFY(I_) `"I_`"
+`define DV_STRINGIFY(I_) `"I_`"
 `endif
 
 `ifndef DUT_HIER_STR
-  `define DUT_HIER_STR `DV_STRINGIFY(`DUT_HIER)
+`define DUT_HIER_STR `DV_STRINGIFY(`DUT_HIER)
 `endif
 
 // Common check macros used by DV_CHECK error and fatal macros.
 // Note: Should not be called by user code
 `ifndef DV_CHECK
-  `define DV_CHECK(T_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK(T_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       if (T_) ; else begin \
         `dv_``SEV_($sformatf("Check failed (%s) %s ", `"T_`", MSG_), ID_) \
@@ -95,7 +95,7 @@
 `endif
 
 `ifndef DV_CHECK_EQ
-  `define DV_CHECK_EQ(ACT_, EXP_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK_EQ(ACT_, EXP_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       if ((ACT_) == (EXP_)) ; else begin \
         `dv_``SEV_($sformatf("Check failed %s == %s (%0d [0x%0h] vs %0d [0x%0h]) %s", \
@@ -105,7 +105,7 @@
 `endif
 
 `ifndef DV_CHECK_NE
-  `define DV_CHECK_NE(ACT_, EXP_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK_NE(ACT_, EXP_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       if ((ACT_) != (EXP_)) ; else begin \
         `dv_``SEV_($sformatf("Check failed %s != %s (%0d [0x%0h] vs %0d [0x%0h]) %s", \
@@ -115,7 +115,7 @@
 `endif
 
 `ifndef DV_CHECK_CASE_EQ
-  `define DV_CHECK_CASE_EQ(ACT_, EXP_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK_CASE_EQ(ACT_, EXP_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       if ((ACT_) === (EXP_)) ; else begin \
         `dv_``SEV_($sformatf("Check failed %s === %s (0x%0h [%0b] vs 0x%0h [%0b]) %s", \
@@ -125,7 +125,7 @@
 `endif
 
 `ifndef DV_CHECK_CASE_NE
-  `define DV_CHECK_CASE_NE(ACT_, EXP_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK_CASE_NE(ACT_, EXP_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       if ((ACT_) !== (EXP_)) ; else begin \
         `dv_``SEV_($sformatf("Check failed %s !== %s (%0d [0x%0h] vs %0d [0x%0h]) %s", \
@@ -135,7 +135,7 @@
 `endif
 
 `ifndef DV_CHECK_LT
-  `define DV_CHECK_LT(ACT_, EXP_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK_LT(ACT_, EXP_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       if ((ACT_) < (EXP_)) ; else begin \
         `dv_``SEV_($sformatf("Check failed %s < %s (%0d [0x%0h] vs %0d [0x%0h]) %s", \
@@ -145,7 +145,7 @@
 `endif
 
 `ifndef DV_CHECK_GT
-  `define DV_CHECK_GT(ACT_, EXP_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK_GT(ACT_, EXP_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       if ((ACT_) > (EXP_)) ; else begin \
         `dv_``SEV_($sformatf("Check failed %s > %s (%0d [0x%0h] vs %0d [0x%0h]) %s", \
@@ -155,7 +155,7 @@
 `endif
 
 `ifndef DV_CHECK_LE
-  `define DV_CHECK_LE(ACT_, EXP_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK_LE(ACT_, EXP_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       if ((ACT_) <= (EXP_)) ; else begin \
         `dv_``SEV_($sformatf("Check failed %s <= %s (%0d [0x%0h] vs %0d [0x%0h]) %s", \
@@ -165,7 +165,7 @@
 `endif
 
 `ifndef DV_CHECK_GE
-  `define DV_CHECK_GE(ACT_, EXP_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK_GE(ACT_, EXP_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       if ((ACT_) >= (EXP_)) ; else begin \
         `dv_``SEV_($sformatf("Check failed %s >= %s (%0d [0x%0h] vs %0d [0x%0h]) %s", \
@@ -175,7 +175,7 @@
 `endif
 
 `ifndef DV_CHECK_STREQ
-  `define DV_CHECK_STREQ(ACT_, EXP_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK_STREQ(ACT_, EXP_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       if ((ACT_) == (EXP_)) ; else begin \
         `dv_``SEV_($sformatf("Check failed \"%s\" == \"%s\" %s", ACT_, EXP_, MSG_), ID_) \
@@ -184,7 +184,7 @@
 `endif
 
 `ifndef DV_CHECK_STRNE
-  `define DV_CHECK_STRNE(ACT_, EXP_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK_STRNE(ACT_, EXP_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       if ((ACT_) != (EXP_)) ; else begin \
         `dv_``SEV_($sformatf("Check failed \"%s\" != \"%s\" %s", ACT_, EXP_, MSG_), ID_) \
@@ -193,7 +193,7 @@
 `endif
 
 `ifndef DV_CHECK_Q_EQ
-  `define DV_CHECK_Q_EQ(ACT_, EXP_, MSG_="", SEV_=error, ID_=`gfn) \
+`define DV_CHECK_Q_EQ(ACT_, EXP_, MSG_ = "", SEV_ = error, ID_ = `gfn) \
     begin \
       `DV_CHECK_EQ(ACT_.size(), EXP_.size(), MSG_, SEV_, ID_) \
       foreach (ACT_[i]) begin \
@@ -204,91 +204,94 @@
 
 // Fatal version of the checks
 `ifndef DV_CHECK_FATAL
-  `define DV_CHECK_FATAL(T_, MSG_="", ID_=`gfn) \
+`define DV_CHECK_FATAL(T_, MSG_ = "", ID_ = `gfn) \
     `DV_CHECK(T_, MSG_, fatal, ID_)
 `endif
 
 `ifndef DV_CHECK_EQ_FATAL
-  `define DV_CHECK_EQ_FATAL(ACT_, EXP_, MSG_="", ID_=`gfn) \
+`define DV_CHECK_EQ_FATAL(ACT_, EXP_, MSG_ = "", ID_ = `gfn) \
     `DV_CHECK_EQ(ACT_, EXP_, MSG_, fatal, ID_)
 `endif
 
 `ifndef DV_CHECK_NE_FATAL
-  `define DV_CHECK_NE_FATAL(ACT_, EXP_, MSG_="", ID_=`gfn) \
+`define DV_CHECK_NE_FATAL(ACT_, EXP_, MSG_ = "", ID_ = `gfn) \
     `DV_CHECK_NE(ACT_, EXP_, MSG_, fatal, ID_)
 `endif
 
 `ifndef DV_CHECK_LT_FATAL
-  `define DV_CHECK_LT_FATAL(ACT_, EXP_, MSG_="", ID_=`gfn) \
+`define DV_CHECK_LT_FATAL(ACT_, EXP_, MSG_ = "", ID_ = `gfn) \
     `DV_CHECK_LT(ACT_, EXP_, MSG_, fatal, ID_)
 `endif
 
 `ifndef DV_CHECK_GT_FATAL
-  `define DV_CHECK_GT_FATAL(ACT_, EXP_, MSG_="", ID_=`gfn) \
+`define DV_CHECK_GT_FATAL(ACT_, EXP_, MSG_ = "", ID_ = `gfn) \
     `DV_CHECK_GT(ACT_, EXP_, MSG_, fatal, ID_)
 `endif
 
 `ifndef DV_CHECK_LE_FATAL
-  `define DV_CHECK_LE_FATAL(ACT_, EXP_, MSG_="", ID_=`gfn) \
+`define DV_CHECK_LE_FATAL(ACT_, EXP_, MSG_ = "", ID_ = `gfn) \
     `DV_CHECK_LE(ACT_, EXP_, MSG_, fatal, ID_)
 `endif
 
 `ifndef DV_CHECK_GE_FATAL
-  `define DV_CHECK_GE_FATAL(ACT_, EXP_, MSG_="", ID_=`gfn) \
+`define DV_CHECK_GE_FATAL(ACT_, EXP_, MSG_ = "", ID_ = `gfn) \
     `DV_CHECK_GE(ACT_, EXP_, MSG_, fatal, ID_)
 `endif
 
 `ifndef DV_CHECK_STREQ_FATAL
-  `define DV_CHECK_STREQ_FATAL(ACT_, EXP_, MSG_="", ID_=`gfn) \
+`define DV_CHECK_STREQ_FATAL(ACT_, EXP_, MSG_ = "", ID_ = `gfn) \
     `DV_CHECK_STREQ(ACT_, EXP_, MSG_, fatal, ID_)
 `endif
 
 `ifndef DV_CHECK_STRNE_FATAL
-  `define DV_CHECK_STRNE_FATAL(ACT_, EXP_, MSG_="", ID_=`gfn) \
+`define DV_CHECK_STRNE_FATAL(ACT_, EXP_, MSG_ = "", ID_ = `gfn) \
     `DV_CHECK_STRNE(ACT_, EXP_, MSG_, fatal, ID_)
 `endif
 
 // Shorthand for common foo.randomize() + fatal check
 `ifndef DV_CHECK_RANDOMIZE_FATAL
-  `define DV_CHECK_RANDOMIZE_FATAL(VAR_, MSG_="Randomization failed!", ID_=`gfn) \
+`define DV_CHECK_RANDOMIZE_FATAL(VAR_, MSG_ = "Randomization failed!", ID_ = `gfn) \
     `DV_CHECK_FATAL(VAR_.randomize(), MSG_, ID_)
 `endif
 
 // Shorthand for common foo.randomize() with { } + fatal check
 `ifndef DV_CHECK_RANDOMIZE_WITH_FATAL
-  `define DV_CHECK_RANDOMIZE_WITH_FATAL(VAR_, WITH_C_, MSG_="Randomization failed!", ID_=`gfn) \
+`define DV_CHECK_RANDOMIZE_WITH_FATAL(VAR_, WITH_C_, MSG_ = "Randomization failed!", ID_ = `gfn) \
     `DV_CHECK_FATAL(VAR_.randomize() with {WITH_C_}, MSG_, ID_)
 `endif
 
 // Shorthand for common std::randomize(foo) + fatal check
 `ifndef DV_CHECK_STD_RANDOMIZE_FATAL
-  `define DV_CHECK_STD_RANDOMIZE_FATAL(VAR_, MSG_="Randomization failed!", ID_=`gfn) \
+`define DV_CHECK_STD_RANDOMIZE_FATAL(VAR_, MSG_ = "Randomization failed!", ID_ = `gfn) \
     `DV_CHECK_FATAL(std::randomize(VAR_), MSG_, ID_)
 `endif
 
 // Shorthand for common std::randomize(foo) with { } + fatal check
 `ifndef DV_CHECK_STD_RANDOMIZE_WITH_FATAL
-  `define DV_CHECK_STD_RANDOMIZE_WITH_FATAL(VAR_, WITH_C_, MSG_="Randomization failed!",ID_=`gfn) \
+`define DV_CHECK_STD_RANDOMIZE_WITH_FATAL(VAR_, WITH_C_, MSG_ = "Randomization failed!",
+                                          ID_ = `gfn) \
     `DV_CHECK_FATAL(std::randomize(VAR_) with {WITH_C_}, MSG_, ID_)
 `endif
 
 // Shorthand for common cls_inst.randomize(member) + fatal check
 // Randomizes a specific member of a class instance.
 `ifndef DV_CHECK_MEMBER_RANDOMIZE_FATAL
-  `define DV_CHECK_MEMBER_RANDOMIZE_FATAL(VAR_, CLS_INST_=this, MSG_="Randomization failed!", ID_=`gfn) \
+`define DV_CHECK_MEMBER_RANDOMIZE_FATAL(VAR_, CLS_INST_ = this, MSG_ = "Randomization failed!",
+                                        ID_ = `gfn) \
     `DV_CHECK_FATAL(CLS_INST_.randomize(VAR_), MSG_, ID_)
 `endif
 
 // Shorthand for common cls_inst.randomize(member) with { } + fatal check
 // Randomizes a specific member of a class instance with inline constraints.
 `ifndef DV_CHECK_MEMBER_RANDOMIZE_WITH_FATAL
-  `define DV_CHECK_MEMBER_RANDOMIZE_WITH_FATAL(VAR_, C_, CLS_INST_=this, MSG_="Randomization failed!", ID_=`gfn) \
+`define DV_CHECK_MEMBER_RANDOMIZE_WITH_FATAL(VAR_, C_, CLS_INST_ = this,
+                                             MSG_ = "Randomization failed!", ID_ = `gfn) \
     `DV_CHECK_FATAL(CLS_INST_.randomize(VAR_) with {C_}, MSG_, ID_)
 `endif
 
 // print static/dynamic 1d array or queue
 `ifndef DV_PRINT_ARR_CONTENTS
-`define DV_PRINT_ARR_CONTENTS(ARR_, V_=uvm_pkg::UVM_MEDIUM, ID_=`gfn) \
+`define DV_PRINT_ARR_CONTENTS(ARR_, V_ = uvm_pkg::UVM_MEDIUM, ID_ = `gfn) \
   begin \
     foreach (ARR_[i]) begin \
       `dv_info($sformatf("%s[%0d] = %0d (0x%0h)", `"ARR_`", i, ARR_[i], ARR_[i]), V_, ID_) \
@@ -298,7 +301,7 @@
 
 // print non-empty tlm FIFOs that were uncompared at end of test
 `ifndef DV_EOT_PRINT_TLM_FIFO_CONTENTS
-`define DV_EOT_PRINT_TLM_FIFO_CONTENTS(TYP_, FIFO_, SEV_=error, ID_=`gfn)                          \
+`define DV_EOT_PRINT_TLM_FIFO_CONTENTS(TYP_, FIFO_, SEV_ = error, ID_ = `gfn)                          \
   forever begin                                                                                    \
     TYP_ item;                                                                                     \
     int res = FIFO_.try_get(item);                                                                 \
@@ -310,7 +313,7 @@
 
 // print non-empty tlm FIFOs that were uncompared at end of test
 `ifndef DV_EOT_PRINT_TLM_FIFO_ARR_CONTENTS
-`define DV_EOT_PRINT_TLM_FIFO_ARR_CONTENTS(TYP_, FIFO_, SEV_=error, ID_=`gfn) \
+`define DV_EOT_PRINT_TLM_FIFO_ARR_CONTENTS(TYP_, FIFO_, SEV_ = error, ID_ = `gfn) \
   begin \
     foreach (FIFO_[i]) begin \
       while (!FIFO_[i].is_empty()) begin \
@@ -324,7 +327,7 @@
 
 // print non-empty tlm FIFOs that were uncompared at end of test
 `ifndef DV_EOT_PRINT_Q_CONTENTS
-`define DV_EOT_PRINT_Q_CONTENTS(TYP_, Q_, SEV_=error, ID_=`gfn) \
+`define DV_EOT_PRINT_Q_CONTENTS(TYP_, Q_, SEV_ = error, ID_ = `gfn) \
   begin \
     while (Q_.size() != 0) begin \
       TYP_ item = Q_.pop_front(); \
@@ -335,7 +338,7 @@
 
 // print non-empty tlm FIFOs that were uncompared at end of test
 `ifndef DV_EOT_PRINT_Q_ARR_CONTENTS
-`define DV_EOT_PRINT_Q_ARR_CONTENTS(TYP_, Q_, SEV_=error, ID_=`gfn) \
+`define DV_EOT_PRINT_Q_ARR_CONTENTS(TYP_, Q_, SEV_ = error, ID_ = `gfn) \
   begin \
     foreach (Q_[i]) begin \
       while (Q_[i].size() != 0) begin \
@@ -348,7 +351,7 @@
 
 // check for non-empty mailbox and print items that were uncompared at end of test
 `ifndef DV_EOT_PRINT_MAILBOX_CONTENTS
-`define DV_EOT_PRINT_MAILBOX_CONTENTS(TYP_, MAILBOX_, SEV_=error, ID_=`gfn) \
+`define DV_EOT_PRINT_MAILBOX_CONTENTS(TYP_, MAILBOX_, SEV_ = error, ID_ = `gfn) \
   begin \
     while (MAILBOX_.num() != 0) begin \
       TYP_ item; \
@@ -360,7 +363,7 @@
 
 // get parity - implemented as a macro so that it can be invoked in constraints as well
 `ifndef GET_PARITY
-  `define GET_PARITY(val, odd=0) (^val ^ odd)
+`define GET_PARITY(val, odd = 0) (^val ^ odd)
 `endif
 
 // Wait for a statement but stop early if the EXIT statement completes.
@@ -371,7 +374,7 @@
 //                      wait(stop_now_flag);,
 //                      "The stop flag was set when we were working")
 `ifndef DV_SPINWAIT_EXIT
-`define DV_SPINWAIT_EXIT(WAIT_, EXIT_, MSG_ = "exit condition occurred!", ID_ =`gfn) \
+`define DV_SPINWAIT_EXIT(WAIT_, EXIT_, MSG_ = "exit condition occurred!", ID_ = `gfn) \
   begin \
     fork begin \
       fork \
@@ -399,7 +402,8 @@
 //                      wait(stop_now_flag);,
 //                      "The stop flag was set when we were working")
 `ifndef DV_SPINWAIT_EXIT_MULTI
-`define DV_SPINWAIT_EXIT_MULTI(WAIT_1_, WAIT_2_, EXIT_, MSG_ = "exit condition occurred!", ID_ =`gfn) \
+`define DV_SPINWAIT_EXIT_MULTI(WAIT_1_, WAIT_2_, EXIT_, MSG_ = "exit condition occurred!",
+                               ID_ = `gfn) \
   `DV_SPINWAIT_EXIT(fork begin \
                       fork \
                         begin WAIT_1_ end \
@@ -412,7 +416,8 @@
 
 // macro that waits for a given delay and then reports an error
 `ifndef DV_WAIT_TIMEOUT
-`define DV_WAIT_TIMEOUT(TIMEOUT_NS_, ID_  = `gfn, ERROR_MSG_ = "timeout occurred!", REPORT_FATAL_ = 1) \
+`define DV_WAIT_TIMEOUT(TIMEOUT_NS_, ID_ = `gfn, ERROR_MSG_ = "timeout occurred!",
+                        REPORT_FATAL_ = 1) \
   begin \
     #(TIMEOUT_NS_ * 1ns); \
     if (REPORT_FATAL_) begin \
@@ -425,19 +430,23 @@
 
 // Wait for a statement, but exit early after a timeout
 `ifndef DV_SPINWAIT
-`define DV_SPINWAIT(WAIT_, MSG_ = "timeout occurred!", TIMEOUT_NS_ = default_spinwait_timeout_ns, ID_ =`gfn, REPORT_FATAL_ = 1) \
+`define DV_SPINWAIT(WAIT_, MSG_ = "timeout occurred!", TIMEOUT_NS_ = default_spinwait_timeout_ns,
+                    ID_ = `gfn, REPORT_FATAL_ = 1) \
   `DV_SPINWAIT_EXIT(WAIT_, `DV_WAIT_TIMEOUT(TIMEOUT_NS_, ID_, MSG_, REPORT_FATAL_);, "", ID_)
 `endif
 
 // a shorthand of `DV_SPINWAIT(wait(...))
 `ifndef DV_WAIT
-`define DV_WAIT(WAIT_COND_, MSG_ = "wait timeout occurred!", TIMEOUT_NS_ = default_spinwait_timeout_ns, ID_ =`gfn, REPORT_FATAL_ = 1) \
+`define DV_WAIT(WAIT_COND_, MSG_ = "wait timeout occurred!",
+                TIMEOUT_NS_ = default_spinwait_timeout_ns, ID_ = `gfn, REPORT_FATAL_ = 1) \
   `DV_SPINWAIT(wait (WAIT_COND_);, MSG_, TIMEOUT_NS_, ID_, REPORT_FATAL_)
 `endif
 
 // Wait for one of two statements, but exit early after a timeout
 `ifndef DV_WAIT_MULTI
-`define DV_WAIT_MULTI(WAIT_COND_1_, WAIT_COND_2_, MSG_ = "wait timeout occurred!", TIMEOUT_NS_ = default_spinwait_timeout_ns, ID_ =`gfn, REPORT_FATAL_ = 1) \
+`define DV_WAIT_MULTI(WAIT_COND_1_, WAIT_COND_2_, MSG_ = "wait timeout occurred!",
+                      TIMEOUT_NS_ = default_spinwait_timeout_ns, ID_ = `gfn,
+                      REPORT_FATAL_ = 1) \
   `DV_SPINWAIT_EXIT_MULTI(WAIT_COND_1_, WAIT_COND_2_, `DV_WAIT_TIMEOUT(TIMEOUT_NS_, ID_, MSG_, REPORT_FATAL_);, "", ID_)
 `endif
 
@@ -531,7 +540,7 @@
 // VALUE_ : Value of the control bit - 1 - enable assertions, 0 - disable assertions.
 // SCOPE_ : Hierarchical string path to the testbench where this macro is invoked, example: %m.
 `ifndef DV_ASSERT_CTRL_REQ
-`define DV_ASSERT_CTRL_REQ(LABEL_, VALUE_, SCOPE_="") \
+`define DV_ASSERT_CTRL_REQ(LABEL_, VALUE_, SCOPE_ = "") \
   begin \
     uvm_config_db#(bit)::set(null, SCOPE_, LABEL_, VALUE_); \
   end
@@ -544,64 +553,64 @@
 // UVM-adjacent.
 `ifdef UVM
 `ifndef dv_info
-  // verilog_lint: waive macro-name-style
-  `define dv_info(MSG_,  VERBOSITY_ = uvm_pkg::UVM_LOW, ID_ = $sformatf("%m")) \
+// verilog_lint: waive macro-name-style
+`define dv_info(MSG_, VERBOSITY_ = uvm_pkg::UVM_LOW, ID_ = $sformatf("%m")) \
     if (uvm_pkg::uvm_report_enabled(VERBOSITY_, uvm_pkg::UVM_INFO, ID_)) begin \
         uvm_pkg::uvm_report_info(ID_, MSG_, VERBOSITY_, `uvm_file, `uvm_line, "", 1); \
     end
 `endif
 
 `ifndef dv_warning
-  // verilog_lint: waive macro-name-style
-  `define dv_warning(MSG_, ID_ = $sformatf("%m")) \
+// verilog_lint: waive macro-name-style
+`define dv_warning(MSG_, ID_ = $sformatf("%m")) \
     if (uvm_pkg::uvm_report_enabled(uvm_pkg::UVM_NONE, uvm_pkg::UVM_WARNING, ID_)) begin \
         uvm_pkg::uvm_report_warning(ID_, MSG_, uvm_pkg::UVM_NONE, `uvm_file, `uvm_line, "", 1); \
     end
 `endif
 
 `ifndef dv_error
-  // verilog_lint: waive macro-name-style
-  `define dv_error(MSG_, ID_ = $sformatf("%m")) \
+// verilog_lint: waive macro-name-style
+`define dv_error(MSG_, ID_ = $sformatf("%m")) \
     if (uvm_pkg::uvm_report_enabled(uvm_pkg::UVM_NONE, uvm_pkg::UVM_ERROR, ID_)) begin \
         uvm_pkg::uvm_report_error(ID_, MSG_, uvm_pkg::UVM_NONE, `uvm_file, `uvm_line, "", 1); \
     end
 `endif
 
 `ifndef dv_fatal
-  // verilog_lint: waive macro-name-style
-  `define dv_fatal(MSG_, ID_ = $sformatf("%m")) \
+// verilog_lint: waive macro-name-style
+`define dv_fatal(MSG_, ID_ = $sformatf("%m")) \
     if (uvm_pkg::uvm_report_enabled(uvm_pkg::UVM_NONE, uvm_pkg::UVM_FATAL, ID_)) begin \
         uvm_pkg::uvm_report_fatal(ID_, MSG_, uvm_pkg::UVM_NONE, `uvm_file, `uvm_line, "", 1); \
     end
 `endif
 
-`else // UVM
+`else  // UVM
 
 `ifndef dv_info
-  // verilog_lint: waive macro-name-style
-  `define dv_info(MSG_, VERBOSITY = DUMMY_, ID_ = $sformatf("%m")) \
+// verilog_lint: waive macro-name-style
+`define dv_info(MSG_, VERBOSITY = DUMMY_, ID_ = $sformatf("%m")) \
     $display("%0t: (%0s:%0d) [%0s] %0s", $time, `__FILE__, `__LINE__, ID_, MSG_);
 `endif
 
 `ifndef dv_warning
-  // verilog_lint: waive macro-name-style
-  `define dv_warning(MSG_, ID_ = $sformatf("%m")) \
+// verilog_lint: waive macro-name-style
+`define dv_warning(MSG_, ID_ = $sformatf("%m")) \
     $warning("%0t: (%0s:%0d) [%0s] %0s", $time, `__FILE__, `__LINE__, ID_, MSG_);
 `endif
 
 `ifndef dv_error
-  // verilog_lint: waive macro-name-style
-  `define dv_error(MSG_, ID_ = $sformatf("%m")) \
+// verilog_lint: waive macro-name-style
+`define dv_error(MSG_, ID_ = $sformatf("%m")) \
     $error("%0t: (%0s:%0d) [%0s] %0s", $time, `__FILE__, `__LINE__, ID_, MSG_);
 `endif
 
 `ifndef dv_fatal
-  // verilog_lint: waive macro-name-style
-  `define dv_fatal(MSG_, ID_ = $sformatf("%m")) \
+// verilog_lint: waive macro-name-style
+`define dv_fatal(MSG_, ID_ = $sformatf("%m")) \
     $fatal(1, "%0t: (%0s:%0d) [%0s] %0s", $time, `__FILE__, `__LINE__, ID_, MSG_);
 `endif
 
-`endif // UVM
+`endif  // UVM
 
 // Macros for constrain clk with common frequencies
 //
@@ -626,7 +635,7 @@
 //
 // This is meant to be overridden externally by passing `+define+BUILD_SEED=<value>`.
 `ifndef BUILD_SEED
-  `define BUILD_SEED 1
+`define BUILD_SEED 1
 `endif
 
 // Max value out of 2 given expressions.
@@ -634,7 +643,7 @@
 // Duplicate of dv_utils_pkg::max2() function, but this is better because
 // it can consume different data types directly without the need for casting.
 `ifndef DV_MAX2
-  `define DV_MAX2(a, b) ((a) > (b) ? (a) : (b))
+`define DV_MAX2(a, b) ((a) > (b) ? (a) : (b))
 `endif
 
 // Creates a signal probe function to sample / force / release an internal signal.
@@ -654,7 +663,8 @@
 //
 // This macro must be invoked in an interface or module.
 `ifndef DV_CREATE_SIGNAL_PROBE_FUNCTION
-`define DV_CREATE_SIGNAL_PROBE_FUNCTION(FUNC_NAME_, SIGNAL_PATH_, SIGNAL_WIDTH_ = uvm_pkg::UVM_HDL_MAX_WIDTH) \
+`define DV_CREATE_SIGNAL_PROBE_FUNCTION(FUNC_NAME_, SIGNAL_PATH_,
+                                        SIGNAL_WIDTH_ = uvm_pkg::UVM_HDL_MAX_WIDTH) \
   function static logic [SIGNAL_WIDTH_-1:0] FUNC_NAME_(dv_utils_pkg::signal_probe_e kind,     \
                                                        logic [SIGNAL_WIDTH_-1:0] value = '0); \
     case (kind)                                                                               \
@@ -672,7 +682,7 @@
 // Use for the temporary print to distinguish from `uvm_info.
 // Do not leave this macro in other source files in the remote repo.
 `ifndef OTDBG
-  `define OTDBG(x) \
+`define OTDBG(x) \
   $write($sformatf("%t:OTDBG:%s:%d:",$time,`__FILE__, `__LINE__));\
   $display($sformatf x);
 `endif

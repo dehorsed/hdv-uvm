@@ -5,12 +5,14 @@
 // Modified by Daniil Kanelsky.
 // Simplified for use in small projects without virtual sequences and RAL.
 
-class hdv_monitor #(type ITEM_T     = uvm_sequence_item,
-                    type REQ_ITEM_T = ITEM_T,
-                    type RSP_ITEM_T = ITEM_T,
-                    type CFG_T      = hdv_agent_cfg,
-                    type COV_T      = hdv_agent_cov) extends uvm_monitor;
-  `uvm_component_param_utils(hdv_monitor #(ITEM_T, REQ_ITEM_T, RSP_ITEM_T, CFG_T, COV_T))
+class hdv_monitor #(
+  type ITEM_T     = uvm_sequence_item,
+  type REQ_ITEM_T = ITEM_T,
+  type RSP_ITEM_T = ITEM_T,
+  type CFG_T      = hdv_agent_cfg,
+  type COV_T      = hdv_agent_cov
+) extends uvm_monitor;
+  `uvm_component_param_utils(hdv_monitor#(ITEM_T, REQ_ITEM_T, RSP_ITEM_T, CFG_T, COV_T))
 
   CFG_T cfg;
   COV_T cov;

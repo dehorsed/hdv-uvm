@@ -5,12 +5,16 @@
 // Modified by Daniil Kanelsky.
 // Simplified for use in small projects without virtual sequences and RAL.
 
-class hdv_driver #(type ITEM_T     = uvm_sequence_item,
-                   type CFG_T      = hdv_agent_cfg,
-                   type RSP_ITEM_T = ITEM_T)
-  extends uvm_driver #(.REQ(ITEM_T), .RSP(RSP_ITEM_T));
+class hdv_driver #(
+  type ITEM_T     = uvm_sequence_item,
+  type CFG_T      = hdv_agent_cfg,
+  type RSP_ITEM_T = ITEM_T
+) extends uvm_driver #(
+  .REQ(ITEM_T),
+  .RSP(RSP_ITEM_T)
+);
 
-  `uvm_component_param_utils(hdv_driver #(ITEM_T, CFG_T, RSP_ITEM_T))
+  `uvm_component_param_utils(hdv_driver#(ITEM_T, CFG_T, RSP_ITEM_T))
 
   bit   under_reset = 0;
   CFG_T cfg;
@@ -27,14 +31,14 @@ class hdv_driver #(type ITEM_T     = uvm_sequence_item,
         seq_item_port.get_next_item(req);
 
         // Wait until reset end
-        //wait(!under_reset);
+        // wait(!under_reset);
 
         drive_trans(req);
 
         seq_item_port.item_done();
       end
     join_none
-  endtask
+  endtask : run_phase
 
   // reset signals forever
   virtual task reset_signals();

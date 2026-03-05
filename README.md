@@ -128,7 +128,7 @@ endclass
 The provided Makefile supports linting the HDV-UVM library with Verilator:
 Environment Variables
 - VERILATOR: Path to Verilator executable (default: verilator)
-- UVM_HOME: Path to UVM library (default: /usr/share/1800.2-2017-1.0)
+- UVM_HOME: Path to UVM library home (default: /usr/share/1800.2-2017-1.0)
 
 ## License
 

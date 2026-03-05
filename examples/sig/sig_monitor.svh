@@ -1,15 +1,11 @@
-class sig_monitor extends uvm_monitor;
+class sig_monitor extends hdv_monitor #(sig_seq_item, sig_seq_item, sig_seq_item, sig_agent_cfg);
+  sig_seq_item trans_collected = null;
+
   virtual sig_if.MONITOR vif;
-  uvm_analysis_port #(sig_seq_item) item_collected_port;
-  sig_seq_item trans_collected;
 
   `uvm_component_utils(sig_monitor)
 
-  function new(string name, uvm_component parent);
-    super.new(name, parent);
-    trans_collected = null;
-    item_collected_port = new("item_collected_port", this);
-  endfunction : new
+  `uvm_component_new
 
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
@@ -21,7 +17,7 @@ class sig_monitor extends uvm_monitor;
     forever begin
       @(posedge vif.clk);
       if (vif.reset && trans_collected != null) begin
-        item_collected_port.write(trans_collected);
+        analysis_port.write(trans_collected);
         trans_collected = null;
         phase.drop_objection(this);
       end else if (!vif.reset && vif.monitor_cb.sig) begin
@@ -33,7 +29,7 @@ class sig_monitor extends uvm_monitor;
         trans_collected.sig_length++;
       end else if (!vif.reset && !vif.monitor_cb.sig) begin
         if (trans_collected != null) begin
-          item_collected_port.write(trans_collected);
+          analysis_port.write(trans_collected);
           trans_collected = null;
           phase.drop_objection(this);
         end

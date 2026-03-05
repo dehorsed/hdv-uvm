@@ -3,6 +3,8 @@ class sig_scoreboard extends uvm_scoreboard;
 
   uvm_tlm_analysis_fifo #(sig_seq_item) item_collected_source, item_collected_sink;
 
+  hdv_env_cfg cfg;
+
   function new(string name, uvm_component parent);
     super.new(name, parent);
   endfunction : new

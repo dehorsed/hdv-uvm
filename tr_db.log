@@ -1,1 +1,0 @@
-  CREATE_STREAM @0 {NAME:seq T:Transactions SCOPE:uvm_test_top.env.sig_agnt_d.sequencer STREAM:892}
