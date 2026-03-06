@@ -1,33 +1,25 @@
 class sig_monitor extends hdv_monitor #(sig_seq_item, sig_seq_item, sig_seq_item, sig_agent_cfg);
   sig_seq_item trans_collected = null;
 
-  virtual sig_if.MONITOR vif;
-
   `uvm_component_utils(sig_monitor)
 
   `uvm_component_new
 
-  function void build_phase(uvm_phase phase);
-    super.build_phase(phase);
-    if (!uvm_config_db#(virtual sig_if.MONITOR)::get(this, "", "vif", vif))
-      `uvm_fatal("NO_VIF", {"virtual interface must be set for: ", get_full_name(), ".vif"});
-  endfunction : build_phase
-
   virtual task run_phase(uvm_phase phase);
     forever begin
-      @(posedge vif.clk);
-      if (vif.reset && trans_collected != null) begin
+      @(posedge cfg.vif.clk);
+      if (cfg.vif.reset && trans_collected != null) begin
         analysis_port.write(trans_collected);
         trans_collected = null;
         phase.drop_objection(this);
-      end else if (!vif.reset && vif.monitor_cb.sig) begin
+      end else if (!cfg.vif.reset && cfg.vif.monitor_cb.sig) begin
         if (trans_collected == null) begin
           phase.raise_objection(this);
           trans_collected = new();
           trans_collected.sig_length = 0;
         end
         trans_collected.sig_length++;
-      end else if (!vif.reset && !vif.monitor_cb.sig) begin
+      end else if (!cfg.vif.reset && !cfg.vif.monitor_cb.sig) begin
         if (trans_collected != null) begin
           analysis_port.write(trans_collected);
           trans_collected = null;

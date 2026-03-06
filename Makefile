@@ -8,7 +8,7 @@ VSIM ?= vsim
 all: lint
 
 lint:
-	$(VERILATOR) -sv -I$(UVM_HOME)/src -DUVM_NO_DPI -Wall -Wpedantic -Wno-UNUSEDSIGNAL -Wno-WIDTHTRUNC -Wno-WIDTHEXPAND --lint-only $(UVM_HOME)/src/uvm_pkg.sv hdv_pkg.sv
+	$(VERILATOR) -sv -I$(UVM_HOME)/src -DUVM_NO_DPI -Wall -Wpedantic -Wno-UNUSEDSIGNAL -Wno-WIDTHTRUNC -Wno-WIDTHEXPAND --lint-only $(UVM_HOME)/src/uvm_pkg.sv hdv_pkg.sv examples/sig/*.sv -Iexamples/sig
 
 format:
 	

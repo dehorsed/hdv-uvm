@@ -26,9 +26,6 @@ module tbench_top;
     
     uvm_config_db#(sig_agent_cfg)::set(uvm_root::get(), "*", "cfg", agent_cfg);
     uvm_config_db#(hdv_env_cfg)::set(uvm_root::get(), "*", "cfg", env_cfg);
-
-    uvm_config_db#(virtual sig_if.DRIVER)::set(uvm_root::get(), "*", "vif", intf.DRIVER);
-    uvm_config_db#(virtual sig_if.MONITOR)::set(uvm_root::get(), "*", "vif", intf.MONITOR);
   end
 
   initial begin
