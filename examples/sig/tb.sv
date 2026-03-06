@@ -14,16 +14,16 @@ module tbench_top;
   end
 
   sig_if intf (
-      clk,
-      reset
+    clk,
+    reset
   );
 
   initial begin
     static sig_agent_cfg agent_cfg = sig_agent_cfg::type_id::create("agent_cfg");
-    static hdv_env_cfg env_cfg = hdv_env_cfg::type_id::create("env_cfg");
+    static hdv_env_cfg   env_cfg = hdv_env_cfg::type_id::create("env_cfg");
 
     agent_cfg.vif = intf;
-    
+
     uvm_config_db#(sig_agent_cfg)::set(uvm_root::get(), "*", "cfg", agent_cfg);
     uvm_config_db#(hdv_env_cfg)::set(uvm_root::get(), "*", "cfg", env_cfg);
   end

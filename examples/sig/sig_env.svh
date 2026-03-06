@@ -1,4 +1,4 @@
-class sig_env extends hdv_env#(hdv_env_cfg, sig_scoreboard, hdv_env_cov);
+class sig_env extends hdv_env #(hdv_env_cfg, sig_scoreboard, hdv_env_cov);
   sig_agent sig_agnt_d, sig_agnt_m;
 
   `uvm_component_utils(sig_env)

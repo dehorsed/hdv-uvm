@@ -1,6 +1,6 @@
 interface sig_if (
-    input logic clk,
-    reset
+  input logic clk,
+  reset
 );
   logic sig;
 

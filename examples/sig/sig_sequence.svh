@@ -7,7 +7,7 @@ class sig_sequence extends hdv_sequence #(sig_seq_item, sig_seq_item, hdv_agent_
     for (int i = 0; i < 1000; i++) begin
       req = sig_seq_item::type_id::create("req");
       wait_for_grant();
-      assert(req.randomize());
+      assert (req.randomize());
       send_request(req);
       wait_for_item_done();
     end
